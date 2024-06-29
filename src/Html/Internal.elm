@@ -1,21 +1,42 @@
 module Html.Internal exposing
-    ( Attribute(..)
-    , Html(..)
+    ( Html(..), Attribute(..)
+    , decontextualizeHtml, decontextualizeAttribute
+    , contextualizeHtml, contextualizeAttribute
+    , usingHtml, usingAttribute
     )
 
-{-| Contextualized HTML
+{-| This module provides a set of primitives for generating context-dependent HTML elements and attributes.
+
+
+# Primitives
+
+@docs Html, Attribute
+
+
+# Decontextualization
+
+@docs decontextualizeHtml, decontextualizeAttribute
+
+
+# Contextualization
+
+@docs contextualizeHtml, contextualizeAttribute
+
+
+# Context Dependency
+
+@docs usingHtml, usingAttribute
+
 -}
 
 import VirtualDom
 
 
+
+-- PRIMITIVES
+
+
 {-| Represents an HTML element encompassing a context (`ctx`) and message (`msg`), also known as a contextualized HTML element.
-
-The context can be used to facilitate the propagation of globally shared state to child nodes. This is ideal for pieces of state that seldom
-change but are frequently used throughout the codebase such as the language, theme, or timezone.
-
-A message can be triggered to emit an event that updates a piece of state.
-
 -}
 type Html ctx msg
     = Html (ctx -> VirtualDom.Node msg)
@@ -25,6 +46,10 @@ type Html ctx msg
 -}
 type Attribute ctx msg
     = Attribute (ctx -> VirtualDom.Attribute msg)
+
+
+
+-- DECONTEXTUALIZATION
 
 
 {-| Converts a contextualized HTML element into a decontextualized virtual DOM node.
@@ -41,11 +66,8 @@ decontextualizeAttribute ctx (Attribute decontextualize) =
     decontextualize ctx
 
 
-{-| Converts a decontextualized virtual DOM node into a contextualized HTML element.
--}
-contextualizeHtml : VirtualDom.Node msg -> Html ctx msg
-contextualizeHtml content =
-    Html (\_ -> content)
+
+-- CONTEXTUALIZATION
 
 
 {-| Converts a decontextualized virtual DOM attribute into a contextualized HTML attribute.
@@ -55,36 +77,26 @@ contextualizeAttribute content =
     Attribute (\_ -> content)
 
 
-{-| Constructs a customized HTML element.
+{-| Converts a decontextualized virtual DOM node into a contextualized HTML element.
 -}
-customElement : String -> List (Attribute glc msg) -> List (Html glc msg) -> Html glc msg
-customElement name attributes children =
-    Html <|
-        \glc ->
-            VirtualDom.node
-                name
-                (List.map (decontextualizeAttribute glc) attributes)
-                (List.map (decontextualizeHtml glc) children)
+contextualizeHtml : VirtualDom.Node msg -> Html ctx msg
+contextualizeHtml content =
+    Html (\_ -> content)
 
 
-{-| Constructs a contextualized HTML `div` element with the given attributes and children.
+
+-- CONTEXT DEPENDENCY
+
+
+{-| Establishes a dependency between a context and an HTML element.
 -}
-div : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-div =
-    customElement "div"
+usingHtml : (ctx -> Html ctx msg) -> Html ctx msg
+usingHtml decontextualize =
+    Html (\ctx -> decontextualizeHtml ctx <| decontextualize ctx)
 
 
-{-| Constructs a contextualized HTML `button` element with the given attributes and children.
+{-| Establishes a dependency between a context and an HTML attribute.
 -}
-button : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-button =
-    customElement "button"
-
-
-{-| Constructs a contextualized HTML `text` element with the given text.
--}
-text : String -> Html ctx msg
-text ctx =
-    Html <|
-        \_ ->
-            VirtualDom.text ctx
+usingAttribute : (ctx -> Attribute ctx msg) -> Attribute ctx msg
+usingAttribute decontextualize =
+    Attribute (\ctx -> decontextualizeAttribute ctx <| decontextualize ctx)
