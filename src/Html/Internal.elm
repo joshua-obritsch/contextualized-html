@@ -7,6 +7,7 @@ module Html.Internal exposing
     , parentElement, leafElement
     , property, boolProperty, floatProperty, intProperty, stringProperty
     , attribute
+    , style
     )
 
 {-| This module provides a set of internal types and functions.
@@ -50,6 +51,11 @@ module Html.Internal exposing
 # Custom Attributes
 
 @docs attribute
+
+
+# Standard Attributes
+
+@docs style
 
 -}
 
@@ -211,3 +217,13 @@ attribute : String -> String -> Attribute ctx msg
 attribute key value =
     Attribute <|
         \_ -> VirtualDom.attribute key value
+
+
+
+-- STANDARD ATTRIBUTES
+
+
+style : String -> String -> Attribute ctx msg
+style key value =
+    Attribute <|
+        \_ -> VirtualDom.style key value
