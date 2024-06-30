@@ -5,7 +5,7 @@ module Html exposing
     , mapElement
     , parentElement, leafElement
     , text
-    , a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
+    , a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, script, search, section, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
     )
 
 {-| This module provides a set of types and functions for generating context-dependent HTML elements.
@@ -43,7 +43,7 @@ module Html exposing
 
 # Standard Elements
 
-#docs a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main\_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
+#docs a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main\_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, search, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
 
 -}
 
@@ -103,38 +103,8 @@ using =
 {-| Transforms the message of a contextualized HTML element.
 -}
 mapElement : (a -> b) -> Html ctx a -> Html ctx b
-mapElement f content =
-    Internal.Html <|
-        \ctx ->
-            VirtualDom.map f (Internal.decontextualizeHtml ctx content)
-
-
-
--- CUSTOM ELEMENTS
-
-
-{-| Constructs a contextualized HTML parent element.
--}
-parentElement : String -> List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-parentElement name attributes children =
-    Internal.Html <|
-        \ctx ->
-            VirtualDom.node
-                name
-                (List.map (Internal.decontextualizeAttribute ctx) attributes)
-                (List.map (Internal.decontextualizeHtml ctx) children)
-
-
-{-| Constructs a contextualized HTML leaf element.
--}
-leafElement : String -> List (Attribute ctx msg) -> Html ctx msg
-leafElement name attributes =
-    Internal.Html <|
-        \ctx ->
-            VirtualDom.node
-                name
-                (List.map (Internal.decontextualizeAttribute ctx) attributes)
-                []
+mapElement =
+    Internal.mapElement
 
 
 
@@ -144,16 +114,33 @@ leafElement name attributes =
 {-| Constructs a contextualized HTML text node.
 -}
 text : String -> Html ctx msg
-text content =
-    Internal.Html <|
-        \_ -> VirtualDom.text content
+text =
+    Internal.textNode
+
+
+
+-- CUSTOM ELEMENTS
+
+
+{-| Constructs a contextualized HTML parent element.
+-}
+parentElement : String -> List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
+parentElement =
+    Internal.parentElement
+
+
+{-| Constructs a contextualized HTML leaf element.
+-}
+leafElement : String -> List (Attribute ctx msg) -> Html ctx msg
+leafElement =
+    Internal.leafElement
 
 
 
 -- STANDARD ELEMENTS
 
 
-{-| Constructs contextualized HTML `a` element.
+{-| Constructs a contextualized HTML `a` element.
 -}
 a : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
 a =
@@ -732,6 +719,13 @@ samp =
 script : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
 script =
     parentElement "script"
+
+
+{-| Constructs a contextualized HTML `search` element.
+-}
+search : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
+search =
+    parentElement "search"
 
 
 {-| Constructs a contextualized HTML `section` element.
