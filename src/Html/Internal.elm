@@ -5,9 +5,9 @@ module Html.Internal exposing
     , mapElement, mapAttribute
     , textNode
     , parentElement, leafElement
-    , property, boolProperty, floatProperty, intProperty, stringProperty
+    , property, boolProperty, charProperty, floatProperty, intProperty, stringProperty
     , attribute
-    , style
+    , style2
     )
 
 {-| This module provides a set of internal types and functions.
@@ -45,7 +45,7 @@ module Html.Internal exposing
 
 # Custom Properties
 
-@docs property, boolProperty, floatProperty, intProperty, stringProperty
+@docs property, boolProperty, charProperty, floatProperty, intProperty, stringProperty
 
 
 # Custom Attributes
@@ -55,7 +55,7 @@ module Html.Internal exposing
 
 # Standard Attributes
 
-@docs style
+@docs style2
 
 -}
 
@@ -188,25 +188,42 @@ property key value =
 boolProperty : String -> Bool -> Attribute ctx msg
 boolProperty key value =
     Attribute <|
-        \_ -> VirtualDom.property key (Json.bool value)
+        \_ ->
+            VirtualDom.property key <|
+                Json.bool value
+
+
+charProperty : String -> Char -> Attribute ctx msg
+charProperty key value =
+    Attribute <|
+        \_ ->
+            VirtualDom.property key <|
+                Json.string <|
+                    String.fromChar value
 
 
 floatProperty : String -> Float -> Attribute ctx msg
 floatProperty key value =
     Attribute <|
-        \_ -> VirtualDom.property key (Json.float value)
+        \_ ->
+            VirtualDom.property key <|
+                Json.float value
 
 
 intProperty : String -> Int -> Attribute ctx msg
 intProperty key value =
     Attribute <|
-        \_ -> VirtualDom.property key (Json.int value)
+        \_ ->
+            VirtualDom.property key <|
+                Json.int value
 
 
 stringProperty : String -> String -> Attribute ctx msg
 stringProperty key value =
     Attribute <|
-        \_ -> VirtualDom.property key (Json.string value)
+        \_ ->
+            VirtualDom.property key <|
+                Json.string value
 
 
 
@@ -223,7 +240,7 @@ attribute key value =
 -- STANDARD ATTRIBUTES
 
 
-style : String -> String -> Attribute ctx msg
-style key value =
+style2 : String -> String -> Attribute ctx msg
+style2 key value =
     Attribute <|
         \_ -> VirtualDom.style key value
