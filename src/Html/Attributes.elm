@@ -4,10 +4,12 @@ module Html.Attributes exposing
     , mapAttribute
     , property, boolProperty, floatProperty, intProperty, stringProperty
     , attribute
-    , abbr, accept, acceptCharset, accesskey, action, allow, allowfullscreen, alt, as_, async, autocapitalize, autocomplete, autofocus, autoplay, blocking, charset, checked, cite, class, color, cols, colspan, content, contenteditable, controls, coords, crossorigin, data, datetime, decoding, default, defer, dir, disabled, download, draggable, enctype, enterkeyhint, fetchpriority, for, form, formaction, formenctype, formmethod, formnovalidate, formtarget, headers, height, hidden, high, href, hreflang, httpEquiv, id, imagesizes, imagesrcset, inert, inputmode, integrity, is, ismap, itemid, itemprop, itemref, itemscope, itemtype, kind, label, lang, list, loading, loop, low, max, maxlength, media, method, min, minlength, multiple, muted, name, nomodule, nonce, novalidate, open, optimum, pattern, ping, placeholder, playsinline, popover, popovertarget, popovertargetaction, poster, preload, readonly, referrerpolicy, rel, required, reversed, rows, rowspan, sandbox, scope, selected, shadowrootclonable, shadowrootdelegatesfocus, shadowrootmode, shadowrootserializable, shape, size, sizes, slot, span, spellcheck, src, srcdoc, srclang, srcset, start, step, style, tabindex, target, title, translate, type_, usemap, value, width, wrap, writingsuggestions
+    , abbr, accept, acceptCharset, accesskey, action, allow, allowfullscreen, alt, as_, autocapitalize, autocomplete, autofocus, autoplay, blocking, charset, checked, cite, class, color, cols, colspan, content, contenteditable, controls, coords, crossorigin, data, datetime, decoding, default, dir, dirname, disabled, download, draggable, enctype, enterkeyhint, fetchpriority, for, form, formaction, formenctype, formmethod, formnovalidate, formtarget, headers, height, hidden, high, href, hreflang, httpEquiv, id, imagesizes, imagesrcset, inert, inputmode, integrity, is, ismap, itemid, itemprop, itemref, itemscope, itemtype, kind, label, lang, list, loading, loop, low, max, maxlength, media, method, min, minlength, multiple, muted, name, nonce, novalidate, open, optimum, pattern, ping, placeholder, playsinline, popover, popovertarget, popovertargetaction, poster, preload, readonly, referrerpolicy, rel, required, reversed, rows, rowspan, sandbox, scope, selected, shadowrootclonable, shadowrootdelegatesfocus, shadowrootmode, shadowrootserializable, shape, size, sizes, slot, span, spellcheck, src, srcdoc, srclang, srcset, start, step, style, style2, tabindex, target, title, translate, type_, usemap, value, width, wrap, writingsuggestions
     )
 
 {-| This module provides a set of types and functions for generating context-dependent HTML attributes.
+
+Removed: `async`, `nomodule`
 
 
 # Contextual Conversion
@@ -37,7 +39,7 @@ module Html.Attributes exposing
 
 # Standard Attributes
 
-@docs abbr, accept, acceptCharset, accesskey, action, allow, allowfullscreen, alt, as_, async, autocapitalize, autocomplete, autofocus, autoplay, blocking, charset, checked, cite, class, color, cols, colspan, content, contenteditable, controls, coords, crossorigin, data, datetime, decoding, default, defer, dir, disabled, download, draggable, enctype, enterkeyhint, fetchpriority, for, form, formaction, formenctype, formmethod, formnovalidate, formtarget, headers, height, hidden, high, href, hreflang, httpEquiv, id, imagesizes, imagesrcset, inert, inputmode, integrity, is, ismap, itemid, itemprop, itemref, itemscope, itemtype, kind, label, lang, list, loading, loop, low, max, maxlength, media, method, min, minlength, multiple, muted, name, nomodule, nonce, novalidate, open, optimum, pattern, ping, placeholder, playsinline, popover, popovertarget, popovertargetaction, poster, preload, readonly, referrerpolicy, rel, required, reversed, rows, rowspan, sandbox, scope, selected, shadowrootclonable, shadowrootdelegatesfocus, shadowrootmode, shadowrootserializable, shape, size, sizes, slot, span, spellcheck, src, srcdoc, srclang, srcset, start, step, style, tabindex, target, title, translate, type_, usemap, value, width, wrap, writingsuggestions
+@docs abbr, accept, acceptCharset, accesskey, action, allow, allowfullscreen, alt, as_, autocapitalize, autocomplete, autofocus, autoplay, blocking, charset, checked, cite, class, color, cols, colspan, content, contenteditable, controls, coords, crossorigin, data, datetime, decoding, default, dir, dirname, disabled, download, draggable, enctype, enterkeyhint, fetchpriority, for, form, formaction, formenctype, formmethod, formnovalidate, formtarget, headers, height, hidden, high, href, hreflang, httpEquiv, id, imagesizes, imagesrcset, inert, inputmode, integrity, is, ismap, itemid, itemprop, itemref, itemscope, itemtype, kind, label, lang, list, loading, loop, low, max, maxlength, media, method, min, minlength, multiple, muted, name, nonce, novalidate, open, optimum, pattern, ping, placeholder, playsinline, popover, popovertarget, popovertargetaction, poster, preload, readonly, referrerpolicy, rel, required, reversed, rows, rowspan, sandbox, scope, selected, shadowrootclonable, shadowrootdelegatesfocus, shadowrootmode, shadowrootserializable, shape, size, sizes, slot, span, spellcheck, src, srcdoc, srclang, srcset, start, step, style, style2, tabindex, target, title, translate, type_, usemap, value, width, wrap, writingsuggestions
 
 -}
 
@@ -105,6 +107,13 @@ boolProperty =
     Internal.boolProperty
 
 
+{-| Constructs a contextualized HTML property of type `Char`.
+-}
+charProperty : String -> Char -> Attribute ctx msg
+charProperty =
+    Internal.charProperty
+
+
 {-| Constructs a contextualized HTML property of type `Float`.
 -}
 floatProperty : String -> Float -> Attribute ctx msg
@@ -142,6 +151,9 @@ attribute =
 
 
 {-| Constructs a contextualized HTML `abbr` attribute.
+
+Supported elements: `th`
+
 -}
 abbr : String -> Attribute ctx msg
 abbr =
@@ -149,6 +161,9 @@ abbr =
 
 
 {-| Constructs a contextualized HTML `accept` attribute.
+
+Supported elements: `input`
+
 -}
 accept : String -> Attribute ctx msg
 accept =
@@ -156,6 +171,9 @@ accept =
 
 
 {-| Constructs a contextualized HTML `accept-charset` attribute.
+
+Supported elements: `form`
+
 -}
 acceptCharset : String -> Attribute ctx msg
 acceptCharset =
@@ -163,13 +181,19 @@ acceptCharset =
 
 
 {-| Constructs a contextualized HTML `accesskey` attribute.
+
+Supported elements: _HTML elements_
+
 -}
-accesskey : String -> Attribute ctx msg
+accesskey : Char -> Attribute ctx msg
 accesskey =
-    stringProperty "accessKey"
+    charProperty "accessKey"
 
 
 {-| Constructs a contextualized HTML `action` attribute.
+
+Supported elements: `form`
+
 -}
 action : String -> Attribute ctx msg
 action =
@@ -177,6 +201,9 @@ action =
 
 
 {-| Constructs a contextualized HTML `allow` attribute.
+
+Supported elements: `iframe`
+
 -}
 allow : String -> Attribute ctx msg
 allow =
@@ -184,6 +211,9 @@ allow =
 
 
 {-| Constructs a contextualized HTML `allowfullscreen` attribute.
+
+Supported elements: `iframe`
+
 -}
 allowfullscreen : Bool -> Attribute ctx msg
 allowfullscreen =
@@ -191,6 +221,9 @@ allowfullscreen =
 
 
 {-| Constructs a contextualized HTML `alt` attribute.
+
+Supported elements: `area`, `img`, `input`
+
 -}
 alt : String -> Attribute ctx msg
 alt =
@@ -198,20 +231,19 @@ alt =
 
 
 {-| Constructs a contextualized HTML `as` attribute.
+
+Supported elements: `link`
+
 -}
 as_ : String -> Attribute ctx msg
 as_ =
     stringProperty "as"
 
 
-{-| Constructs a contextualized HTML `async` attribute.
--}
-async : Bool -> Attribute ctx msg
-async =
-    boolProperty "async"
-
-
 {-| Constructs a contextualized HTML `autocapitalize` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 autocapitalize : String -> Attribute ctx msg
 autocapitalize =
@@ -219,6 +251,9 @@ autocapitalize =
 
 
 {-| Constructs a contextualized HTML `autocomplete` attribute.
+
+Supported lements: `form`, `input`, `select`, `textarea`
+
 -}
 autocomplete : String -> Attribute ctx msg
 autocomplete =
@@ -226,6 +261,9 @@ autocomplete =
 
 
 {-| Constructs a contextualized HTML `autofocus` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 autofocus : Bool -> Attribute ctx msg
 autofocus =
@@ -233,6 +271,9 @@ autofocus =
 
 
 {-| Constructs a contextualized HTML `autoplay` attribute.
+
+Supported elements: `audio`, `video`
+
 -}
 autoplay : Bool -> Attribute ctx msg
 autoplay =
@@ -240,6 +281,11 @@ autoplay =
 
 
 {-| Constructs a contextualized HTML `blocking` attribute.
+
+Supported elements: `link`, `script`, `style`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 blocking : String -> Attribute ctx msg
 blocking =
@@ -247,6 +293,9 @@ blocking =
 
 
 {-| Constructs a contextualized HTML `charset` attribute.
+
+Supported elements: `meta`
+
 -}
 charset : String -> Attribute ctx msg
 charset =
@@ -254,6 +303,9 @@ charset =
 
 
 {-| Constructs a contextualized HTML `checked` attribute.
+
+Supported elements: `input`
+
 -}
 checked : Bool -> Attribute ctx msg
 checked =
@@ -261,6 +313,9 @@ checked =
 
 
 {-| Constructs a contextualized HTML `cite` attribute.
+
+Supported elements: `blockquote`, `del`, `ins`, `q`
+
 -}
 cite : String -> Attribute ctx msg
 cite =
@@ -268,6 +323,9 @@ cite =
 
 
 {-| Constructs a contextualized HTML `class` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 class : String -> Attribute ctx msg
 class =
@@ -275,13 +333,19 @@ class =
 
 
 {-| Constructs a contextualized HTML `color` attribute.
+
+Supported elements: `link`
+
 -}
 color : String -> Attribute ctx msg
 color =
-    stringProperty "color"
+    attribute "color"
 
 
 {-| Constructs a contextualized HTML `cols` attribute.
+
+Supported elements: `textarea`
+
 -}
 cols : Int -> Attribute ctx msg
 cols =
@@ -289,6 +353,9 @@ cols =
 
 
 {-| Constructs a contextualized HTML `colspan` attribute.
+
+Supported elements: `td`, `th`
+
 -}
 colspan : Int -> Attribute ctx msg
 colspan =
@@ -296,6 +363,9 @@ colspan =
 
 
 {-| Constructs a contextualized HTML `content` attribute.
+
+Supported elements: `meta`
+
 -}
 content : String -> Attribute ctx msg
 content =
@@ -303,6 +373,9 @@ content =
 
 
 {-| Constructs a contextualized HTML `contenteditable` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 contenteditable : String -> Attribute ctx msg
 contenteditable =
@@ -310,6 +383,9 @@ contenteditable =
 
 
 {-| Constructs a contextualized HTML `controls` attribute.
+
+Supported elements: `audio`, `video`
+
 -}
 controls : Bool -> Attribute ctx msg
 controls =
@@ -317,6 +393,9 @@ controls =
 
 
 {-| Constructs a contextualized HTML `coords` attribute.
+
+Supported elements: `area`
+
 -}
 coords : String -> Attribute ctx msg
 coords =
@@ -324,6 +403,11 @@ coords =
 
 
 {-| Constructs a contextualized HTML `crossorigin` attribute.
+
+Supported elements: `audio`, `img`, `link`, `script`, `video`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 crossorigin : String -> Attribute ctx msg
 crossorigin =
@@ -331,6 +415,9 @@ crossorigin =
 
 
 {-| Constructs a contextualized HTML `data` attribute.
+
+Supported elements: `object`
+
 -}
 data : String -> Attribute ctx msg
 data =
@@ -338,6 +425,9 @@ data =
 
 
 {-| Constructs a contextualized HTML `datetime` attribute.
+
+Supported elements: `del`, `ins`, `time`
+
 -}
 datetime : String -> Attribute ctx msg
 datetime =
@@ -345,6 +435,9 @@ datetime =
 
 
 {-| Constructs a contextualized HTML `decoding` attribute.
+
+Supported elements: `img`
+
 -}
 decoding : String -> Attribute ctx msg
 decoding =
@@ -352,27 +445,39 @@ decoding =
 
 
 {-| Constructs a contextualized HTML `default` attribute.
+
+Supported elements: `track`
+
 -}
 default : Bool -> Attribute ctx msg
 default =
     boolProperty "default"
 
 
-{-| Constructs a contextualized HTML `defer` attribute.
--}
-defer : Bool -> Attribute ctx msg
-defer =
-    boolProperty "defer"
-
-
 {-| Constructs a contextualized HTML `dir` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 dir : String -> Attribute ctx msg
 dir =
     stringProperty "dir"
 
 
+{-| Constructs a contextualized HTML `dirname` attribute.
+
+Supported elements: `input`, `textarea`
+
+-}
+dirname : String -> Attribute ctx msg
+dirname =
+    stringProperty "dirName"
+
+
 {-| Constructs a contextualized HTML `disabled` attribute.
+
+Supported elements: `button`, `fieldset`, `input`, `link`, `optgroup`, `option`, `select`, `textarea`, _form-associated custom elements_
+
 -}
 disabled : Bool -> Attribute ctx msg
 disabled =
@@ -380,6 +485,9 @@ disabled =
 
 
 {-| Constructs a contextualized HTML `download` attribute.
+
+Supported elements: `a`, `area`
+
 -}
 download : String -> Attribute ctx msg
 download =
@@ -387,6 +495,9 @@ download =
 
 
 {-| Constructs a contextualized HTML `draggable` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 draggable : Bool -> Attribute ctx msg
 draggable =
@@ -394,6 +505,9 @@ draggable =
 
 
 {-| Constructs a contextualized HTML `enctype` attribute.
+
+Supported elements: `form`
+
 -}
 enctype : String -> Attribute ctx msg
 enctype =
@@ -401,6 +515,9 @@ enctype =
 
 
 {-| Constructs a contextualized HTML `enterkeyhint` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 enterkeyhint : String -> Attribute ctx msg
 enterkeyhint =
@@ -408,6 +525,11 @@ enterkeyhint =
 
 
 {-| Constructs a contextualized HTML `fetchpriority` attribute.
+
+Supported elements: `img`, `link`, `script`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 fetchpriority : String -> Attribute ctx msg
 fetchpriority =
@@ -415,6 +537,9 @@ fetchpriority =
 
 
 {-| Constructs a contextualized HTML `for` attribute.
+
+Supported elements: `label`, `output`
+
 -}
 for : String -> Attribute ctx msg
 for =
@@ -422,13 +547,19 @@ for =
 
 
 {-| Constructs a contextualized HTML `form` attribute.
+
+Supported elements: `button`, `fieldset`, `input`, `object`, `output`, `select`, `textarea`, _form-associated custom elements_
+
 -}
 form : String -> Attribute ctx msg
 form =
-    stringProperty "form"
+    attribute "form"
 
 
 {-| Constructs a contextualized HTML `formaction` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 formaction : String -> Attribute ctx msg
 formaction =
@@ -436,6 +567,9 @@ formaction =
 
 
 {-| Constructs a contextualized HTML `formenctype` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 formenctype : String -> Attribute ctx msg
 formenctype =
@@ -443,6 +577,9 @@ formenctype =
 
 
 {-| Constructs a contextualized HTML `formmethod` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 formmethod : String -> Attribute ctx msg
 formmethod =
@@ -450,6 +587,9 @@ formmethod =
 
 
 {-| Constructs a contextualized HTML `formnovalidate` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 formnovalidate : Bool -> Attribute ctx msg
 formnovalidate =
@@ -457,6 +597,9 @@ formnovalidate =
 
 
 {-| Constructs a contextualized HTML `formtarget` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 formtarget : String -> Attribute ctx msg
 formtarget =
@@ -464,6 +607,9 @@ formtarget =
 
 
 {-| Constructs a contextualized HTML `headers` attribute.
+
+Supported elements: `td`, `th`
+
 -}
 headers : String -> Attribute ctx msg
 headers =
@@ -471,6 +617,9 @@ headers =
 
 
 {-| Constructs a contextualized HTML `height` attribute.
+
+Supported elements: `canvas`, `embed`, `iframe`, `img`, `input`, `object`, `source`, `video`
+
 -}
 height : Int -> Attribute ctx msg
 height =
@@ -478,6 +627,9 @@ height =
 
 
 {-| Constructs a contextualized HTML `hidden` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 hidden : Bool -> Attribute ctx msg
 hidden =
@@ -485,6 +637,9 @@ hidden =
 
 
 {-| Constructs a contextualized HTML `high` attribute.
+
+Supported elements: `meter`
+
 -}
 high : Float -> Attribute ctx msg
 high =
@@ -492,6 +647,9 @@ high =
 
 
 {-| Constructs a contextualized HTML `href` attribute.
+
+Supported elements: `a`, `area`, `base`, `link`
+
 -}
 href : String -> Attribute ctx msg
 href =
@@ -499,6 +657,9 @@ href =
 
 
 {-| Constructs a contextualized HTML `hreflang` attribute.
+
+Supported elements: `a`, `link`
+
 -}
 hreflang : String -> Attribute ctx msg
 hreflang =
@@ -506,6 +667,9 @@ hreflang =
 
 
 {-| Constructs a contextualized HTML `http-equiv` attribute.
+
+Supported elements: `meta`
+
 -}
 httpEquiv : String -> Attribute ctx msg
 httpEquiv =
@@ -513,6 +677,9 @@ httpEquiv =
 
 
 {-| Constructs a contextualized HTML `id` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 id : String -> Attribute ctx msg
 id =
@@ -520,20 +687,29 @@ id =
 
 
 {-| Constructs a contextualized HTML `imagesizes` attribute.
+
+Supported elements: `link`
+
 -}
 imagesizes : String -> Attribute ctx msg
 imagesizes =
-    stringProperty "imagesizes"
+    stringProperty "imageSizes"
 
 
 {-| Constructs a contextualized HTML `imagesrcset` attribute.
+
+Supported elements: `link`
+
 -}
 imagesrcset : String -> Attribute ctx msg
 imagesrcset =
-    stringProperty "imagesrcset"
+    stringProperty "imageSrcset"
 
 
 {-| Constructs a contextualized HTML `inert` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 inert : Bool -> Attribute ctx msg
 inert =
@@ -541,6 +717,9 @@ inert =
 
 
 {-| Constructs a contextualized HTML `inputmode` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 inputmode : String -> Attribute ctx msg
 inputmode =
@@ -548,6 +727,11 @@ inputmode =
 
 
 {-| Constructs a contextualized HTML `integrity` attribute.
+
+Supported elements: `link`, `script`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 integrity : String -> Attribute ctx msg
 integrity =
@@ -555,13 +739,19 @@ integrity =
 
 
 {-| Constructs a contextualized HTML `is` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 is : String -> Attribute ctx msg
 is =
-    stringProperty "is"
+    attribute "is"
 
 
 {-| Constructs a contextualized HTML `ismap` attribute.
+
+Supported elements: `img`
+
 -}
 ismap : Bool -> Attribute ctx msg
 ismap =
@@ -569,41 +759,59 @@ ismap =
 
 
 {-| Constructs a contextualized HTML `itemid` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 itemid : String -> Attribute ctx msg
 itemid =
-    stringProperty "itemid"
+    attribute "itemid"
 
 
 {-| Constructs a contextualized HTML `itemprop` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 itemprop : String -> Attribute ctx msg
 itemprop =
-    stringProperty "itemprop"
+    attribute "itemprop"
 
 
 {-| Constructs a contextualized HTML `itemref` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 itemref : String -> Attribute ctx msg
 itemref =
-    stringProperty "itemref"
+    attribute "itemref"
 
 
 {-| Constructs a contextualized HTML `itemscope` attribute.
+
+Supported elements: _HTML elements_
+
 -}
-itemscope : Bool -> Attribute ctx msg
+itemscope : String -> Attribute ctx msg
 itemscope =
-    boolProperty "itemscope"
+    attribute "itemscope"
 
 
 {-| Constructs a contextualized HTML `itemtype` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 itemtype : String -> Attribute ctx msg
 itemtype =
-    stringProperty "itemtype"
+    attribute "itemtype"
 
 
 {-| Constructs a contextualized HTML `kind` attribute.
+
+Supported elements: `track`
+
 -}
 kind : String -> Attribute ctx msg
 kind =
@@ -611,6 +819,9 @@ kind =
 
 
 {-| Constructs a contextualized HTML `label` attribute.
+
+Supported elements: `optgroup`, `option`, `track`
+
 -}
 label : String -> Attribute ctx msg
 label =
@@ -618,6 +829,9 @@ label =
 
 
 {-| Constructs a contextualized HTML `lang` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 lang : String -> Attribute ctx msg
 lang =
@@ -625,13 +839,19 @@ lang =
 
 
 {-| Constructs a contextualized HTML `list` attribute.
+
+Supported elements: `input`
+
 -}
 list : String -> Attribute ctx msg
 list =
-    stringProperty "list"
+    attribute "list"
 
 
 {-| Constructs a contextualized HTML `loading` attribute.
+
+Supported elements: `iframe`, `img`
+
 -}
 loading : String -> Attribute ctx msg
 loading =
@@ -639,6 +859,9 @@ loading =
 
 
 {-| Constructs a contextualized HTML `loop` attribute.
+
+Supported elements: `audio`, `video`
+
 -}
 loop : Bool -> Attribute ctx msg
 loop =
@@ -646,6 +869,9 @@ loop =
 
 
 {-| Constructs a contextualized HTML `low` attribute.
+
+Supported elements: `meter`
+
 -}
 low : Float -> Attribute ctx msg
 low =
@@ -653,13 +879,19 @@ low =
 
 
 {-| Constructs a contextualized HTML `max` attribute.
+
+Supported elements: `input`, `meter`, `progress`
+
 -}
-max : Float -> Attribute ctx msg
+max : String -> Attribute ctx msg
 max =
-    floatProperty "max"
+    stringProperty "max"
 
 
 {-| Constructs a contextualized HTML `maxlength` attribute.
+
+Supported elements: `input`, `textarea`
+
 -}
 maxlength : Int -> Attribute ctx msg
 maxlength =
@@ -667,6 +899,9 @@ maxlength =
 
 
 {-| Constructs a contextualized HTML `media` attribute.
+
+Supported elements: `link`, `meta`, `source`, `style`
+
 -}
 media : String -> Attribute ctx msg
 media =
@@ -674,6 +909,9 @@ media =
 
 
 {-| Constructs a contextualized HTML `method` attribute.
+
+Supported elements: `form`
+
 -}
 method : String -> Attribute ctx msg
 method =
@@ -681,6 +919,9 @@ method =
 
 
 {-| Constructs a contextualized HTML `min` attribute.
+
+Supported elements: `input`, `meter`
+
 -}
 min : Float -> Attribute ctx msg
 min =
@@ -688,6 +929,9 @@ min =
 
 
 {-| Constructs a contextualized HTML `minlength` attribute.
+
+Supported elements: `input`, `textarea`
+
 -}
 minlength : Int -> Attribute ctx msg
 minlength =
@@ -695,6 +939,9 @@ minlength =
 
 
 {-| Constructs a contextualized HTML `multiple` attribute.
+
+Supported elements: `input`, `select`
+
 -}
 multiple : Bool -> Attribute ctx msg
 multiple =
@@ -702,6 +949,9 @@ multiple =
 
 
 {-| Constructs a contextualized HTML `muted` attribute.
+
+Supported elements: `audio`, `video`
+
 -}
 muted : Bool -> Attribute ctx msg
 muted =
@@ -709,20 +959,19 @@ muted =
 
 
 {-| Constructs a contextualized HTML `name` attribute.
+
+Supported elements: `button`, `details`, `fieldset`, `form`, `iframe`, `input`, `map`, `object`, `output`, `select`, `slot`, `textarea`, _form-associated custom elements_
+
 -}
 name : String -> Attribute ctx msg
 name =
     stringProperty "name"
 
 
-{-| Constructs a contextualized HTML `nomodule` attribute.
--}
-nomodule : Bool -> Attribute ctx msg
-nomodule =
-    boolProperty "noModule"
-
-
 {-| Constructs a contextualized HTML `nonce` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 nonce : String -> Attribute ctx msg
 nonce =
@@ -730,6 +979,9 @@ nonce =
 
 
 {-| Constructs a contextualized HTML `novalidate` attribute.
+
+Supported elements: `form`
+
 -}
 novalidate : Bool -> Attribute ctx msg
 novalidate =
@@ -737,6 +989,9 @@ novalidate =
 
 
 {-| Constructs a contextualized HTML `open` attribute.
+
+Supported elements: `details`, `dialog`
+
 -}
 open : Bool -> Attribute ctx msg
 open =
@@ -744,6 +999,9 @@ open =
 
 
 {-| Constructs a contextualized HTML `optimum` attribute.
+
+Supported elements: `meter`
+
 -}
 optimum : Float -> Attribute ctx msg
 optimum =
@@ -751,6 +1009,9 @@ optimum =
 
 
 {-| Constructs a contextualized HTML `pattern` attribute.
+
+Supported elements: `input`
+
 -}
 pattern : String -> Attribute ctx msg
 pattern =
@@ -758,6 +1019,9 @@ pattern =
 
 
 {-| Constructs a contextualized HTML `ping` attribute.
+
+Supported elements: `a`, `area`
+
 -}
 ping : String -> Attribute ctx msg
 ping =
@@ -765,6 +1029,9 @@ ping =
 
 
 {-| Constructs a contextualized HTML `placeholder` attribute.
+
+Supported elements: `input`, `textarea`
+
 -}
 placeholder : String -> Attribute ctx msg
 placeholder =
@@ -772,6 +1039,9 @@ placeholder =
 
 
 {-| Constructs a contextualized HTML `playsinline` attribute.
+
+Supported elements: `video`
+
 -}
 playsinline : Bool -> Attribute ctx msg
 playsinline =
@@ -779,6 +1049,9 @@ playsinline =
 
 
 {-| Constructs a contextualized HTML `popover` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 popover : String -> Attribute ctx msg
 popover =
@@ -786,6 +1059,9 @@ popover =
 
 
 {-| Constructs a contextualized HTML `popovertarget` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 popovertarget : String -> Attribute ctx msg
 popovertarget =
@@ -793,6 +1069,9 @@ popovertarget =
 
 
 {-| Constructs a contextualized HTML `popovertargetaction` attribute.
+
+Supported elements: `button`, `input`
+
 -}
 popovertargetaction : String -> Attribute ctx msg
 popovertargetaction =
@@ -800,6 +1079,9 @@ popovertargetaction =
 
 
 {-| Constructs a contextualized HTML `poster` attribute.
+
+Supported elements: `video`
+
 -}
 poster : String -> Attribute ctx msg
 poster =
@@ -807,6 +1089,9 @@ poster =
 
 
 {-| Constructs a contextualized HTML `preload` attribute.
+
+Supported elements: `audio`, `video`
+
 -}
 preload : String -> Attribute ctx msg
 preload =
@@ -814,6 +1099,9 @@ preload =
 
 
 {-| Constructs a contextualized HTML `readonly` attribute.
+
+Supported elements: `input`, `textarea`, _form-associated custom elements_
+
 -}
 readonly : Bool -> Attribute ctx msg
 readonly =
@@ -821,6 +1109,11 @@ readonly =
 
 
 {-| Constructs a contextualized HTML `referrerpolicy` attribute.
+
+Supported elements: `a`, `area`, `iframe`, `img`, `link`, `script`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 referrerpolicy : String -> Attribute ctx msg
 referrerpolicy =
@@ -828,6 +1121,9 @@ referrerpolicy =
 
 
 {-| Constructs a contextualized HTML `rel` attribute.
+
+Supported elements: `a`, `area`, `link`
+
 -}
 rel : String -> Attribute ctx msg
 rel =
@@ -835,6 +1131,9 @@ rel =
 
 
 {-| Constructs a contextualized HTML `required` attribute.
+
+Supported elements: `input`, `select`, `textarea`
+
 -}
 required : Bool -> Attribute ctx msg
 required =
@@ -842,6 +1141,9 @@ required =
 
 
 {-| Constructs a contextualized HTML `reversed` attribute.
+
+Supported elements: `ol`
+
 -}
 reversed : Bool -> Attribute ctx msg
 reversed =
@@ -849,6 +1151,9 @@ reversed =
 
 
 {-| Constructs a contextualized HTML `rows` attribute.
+
+Supported elements: `textarea`
+
 -}
 rows : Int -> Attribute ctx msg
 rows =
@@ -856,6 +1161,9 @@ rows =
 
 
 {-| Constructs a contextualized HTML `rowspan` attribute.
+
+Supported elements: `td`, `th`
+
 -}
 rowspan : Int -> Attribute ctx msg
 rowspan =
@@ -863,6 +1171,9 @@ rowspan =
 
 
 {-| Constructs a contextualized HTML `sandbox` attribute.
+
+Supported elements: `iframe`
+
 -}
 sandbox : String -> Attribute ctx msg
 sandbox =
@@ -870,6 +1181,9 @@ sandbox =
 
 
 {-| Constructs a contextualized HTML `scope` attribute.
+
+Supported elements: `th`
+
 -}
 scope : String -> Attribute ctx msg
 scope =
@@ -877,6 +1191,9 @@ scope =
 
 
 {-| Constructs a contextualized HTML `selected` attribute.
+
+Supported elements: `option`
+
 -}
 selected : Bool -> Attribute ctx msg
 selected =
@@ -884,6 +1201,9 @@ selected =
 
 
 {-| Constructs a contextualized HTML `shadowrootclonable` attribute.
+
+Supported elements: `template`
+
 -}
 shadowrootclonable : Bool -> Attribute ctx msg
 shadowrootclonable =
@@ -891,6 +1211,9 @@ shadowrootclonable =
 
 
 {-| Constructs a contextualized HTML `shadowrootdelegatesfocus` attribute.
+
+Supported elements: `template`
+
 -}
 shadowrootdelegatesfocus : Bool -> Attribute ctx msg
 shadowrootdelegatesfocus =
@@ -898,6 +1221,9 @@ shadowrootdelegatesfocus =
 
 
 {-| Constructs a contextualized HTML `shadowrootmode` attribute.
+
+Supported elements: `template`
+
 -}
 shadowrootmode : String -> Attribute ctx msg
 shadowrootmode =
@@ -905,6 +1231,9 @@ shadowrootmode =
 
 
 {-| Constructs a contextualized HTML `shadowrootserializable` attribute.
+
+Supported elements: `template`
+
 -}
 shadowrootserializable : Bool -> Attribute ctx msg
 shadowrootserializable =
@@ -912,6 +1241,9 @@ shadowrootserializable =
 
 
 {-| Constructs a contextualized HTML `shape` attribute.
+
+Supported elements: `area`
+
 -}
 shape : String -> Attribute ctx msg
 shape =
@@ -919,6 +1251,9 @@ shape =
 
 
 {-| Constructs a contextualized HTML `size` attribute.
+
+Supported elements: `input`, `select`
+
 -}
 size : Int -> Attribute ctx msg
 size =
@@ -926,6 +1261,9 @@ size =
 
 
 {-| Constructs a contextualized HTML `sizes` attribute.
+
+Supported elements: `link`
+
 -}
 sizes : String -> Attribute ctx msg
 sizes =
@@ -933,6 +1271,9 @@ sizes =
 
 
 {-| Constructs a contextualized HTML `slot` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 slot : String -> Attribute ctx msg
 slot =
@@ -940,6 +1281,9 @@ slot =
 
 
 {-| Constructs a contextualized HTML `span` attribute.
+
+Supported elements: `col`, `colgroup`
+
 -}
 span : Int -> Attribute ctx msg
 span =
@@ -947,6 +1291,9 @@ span =
 
 
 {-| Constructs a contextualized HTML `spellcheck` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 spellcheck : Bool -> Attribute ctx msg
 spellcheck =
@@ -954,6 +1301,11 @@ spellcheck =
 
 
 {-| Constructs a contextualized HTML `src` attribute.
+
+Supported elements: `audio`, `embed`, `iframe`, `img`, `input`, `script`, `source`, `track`, `video`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 src : String -> Attribute ctx msg
 src =
@@ -961,6 +1313,9 @@ src =
 
 
 {-| Constructs a contextualized HTML `srcdoc` attribute.
+
+Supported elements: `iframe`
+
 -}
 srcdoc : String -> Attribute ctx msg
 srcdoc =
@@ -968,6 +1323,9 @@ srcdoc =
 
 
 {-| Constructs a contextualized HTML `srclang` attribute.
+
+Supported elements: `track`
+
 -}
 srclang : String -> Attribute ctx msg
 srclang =
@@ -975,6 +1333,9 @@ srclang =
 
 
 {-| Constructs a contextualized HTML `srcset` attribute.
+
+Supported elements: `img`, `source`
+
 -}
 srcset : String -> Attribute ctx msg
 srcset =
@@ -982,6 +1343,9 @@ srcset =
 
 
 {-| Constructs a contextualized HTML `start` attribute.
+
+Supported elements: `ol`
+
 -}
 start : Int -> Attribute ctx msg
 start =
@@ -989,6 +1353,9 @@ start =
 
 
 {-| Constructs a contextualized HTML `step` attribute.
+
+Supported elements: `input`
+
 -}
 step : String -> Attribute ctx msg
 step =
@@ -996,13 +1363,29 @@ step =
 
 
 {-| Constructs a contextualized HTML `style` attribute.
+
+Supported elements: _HTML elements_
+
 -}
-style : String -> String -> Attribute ctx msg
+style : String -> Attribute ctx msg
 style =
-    Internal.style
+    stringProperty "style"
+
+
+{-| Appends a style to the contextualized HTML `style` attribute.
+
+Supported elements: _HTML elements_
+
+-}
+style2 : String -> String -> Attribute ctx msg
+style2 =
+    Internal.style2
 
 
 {-| Constructs a contextualized HTML `tabindex` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 tabindex : Int -> Attribute ctx msg
 tabindex =
@@ -1010,6 +1393,9 @@ tabindex =
 
 
 {-| Constructs a contextualized HTML `target` attribute.
+
+Supported elements: `a`, `area`, `base`, `form`
+
 -}
 target : String -> Attribute ctx msg
 target =
@@ -1017,6 +1403,9 @@ target =
 
 
 {-| Constructs a contextualized HTML `title` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 title : String -> Attribute ctx msg
 title =
@@ -1024,6 +1413,9 @@ title =
 
 
 {-| Constructs a contextualized HTML `translate` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 translate : Bool -> Attribute ctx msg
 translate =
@@ -1031,6 +1423,11 @@ translate =
 
 
 {-| Constructs a contextualized HTML `type` attribute.
+
+Supported elements: `a`, `button`, `embed`, `input`, `link`, `object`, `ol`, `script`, `source`
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
 -}
 type_ : String -> Attribute ctx msg
 type_ =
@@ -1038,6 +1435,9 @@ type_ =
 
 
 {-| Constructs a contextualized HTML `usemap` attribute.
+
+Supported elements: `img`
+
 -}
 usemap : String -> Attribute ctx msg
 usemap =
@@ -1045,6 +1445,9 @@ usemap =
 
 
 {-| Constructs a contextualized HTML `value` attribute.
+
+Supported elements: `button`, `data`, `input`, `li`, `meter`, `option`, `progress`
+
 -}
 value : String -> Attribute ctx msg
 value =
@@ -1052,6 +1455,9 @@ value =
 
 
 {-| Constructs a contextualized HTML `width` attribute.
+
+Supported elements: `canvas`, `embed`, `iframe`, `img`, `input`, `object`, `source`, `video`
+
 -}
 width : Int -> Attribute ctx msg
 width =
@@ -1059,6 +1465,9 @@ width =
 
 
 {-| Constructs a contextualized HTML `wrap` attribute.
+
+Supported elements: `textarea`
+
 -}
 wrap : String -> Attribute ctx msg
 wrap =
@@ -1066,6 +1475,9 @@ wrap =
 
 
 {-| Constructs a contextualized HTML `writingsuggestions` attribute.
+
+Supported elements: _HTML elements_
+
 -}
 writingsuggestions : Bool -> Attribute ctx msg
 writingsuggestions =
