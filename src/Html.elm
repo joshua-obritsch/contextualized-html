@@ -1,110 +1,211 @@
 module Html exposing
-    ( Html, Attribute
-    , contextualize, decontextualize
-    , using
-    , mapElement
-    , parentElement, leafElement
+    ( Html(..)
+    , contextualize, decontextualize, using
     , text
-    , a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, search, section, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
+    , a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, section, search, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
     )
 
 {-| This module provides a set of types and functions for generating context-dependent HTML elements.
 
 
-# Primitives
-
-@docs Html, Attribute
+# Table of Contents
 
 
-# Contextual Conversion
+## Types
 
-@docs contextualize, decontextualize
-
-
-# Contextual Dependency
-
-@docs using
+  - [Html](#Html)
 
 
-# Transformations
+## Contextualization
 
-@docs mapElement
-
-
-# Custom Elements
-
-@docs parentElement, leafElement
+  - [contextualize](#contextualize)
+  - [decontextualize](#decontextualize)
+  - [using](#using)
 
 
-# Text
+## Text
+
+  - [text](#text)
+
+
+## Elements
+
+  - [a](#a)
+  - [abbr](#abbr)
+  - [address](#address)
+  - [area](#area)
+  - [article](#article)
+  - [aside](#aside)
+  - [audio](#audio)
+  - [b](#b)
+  - [base](#base)
+  - [bdi](#bdi)
+  - [bdo](#bdo)
+  - [blockquote](#blockquote)
+  - [body](#body)
+  - [br](#br)
+  - [button](#button)
+  - [canvas](#canvas)
+  - [caption](#caption)
+  - [cite](#cite)
+  - [code](#code)
+  - [col](#col)
+  - [colgroup](#colgroup)
+  - [data](#data)
+  - [datalist](#datalist)
+  - [dd](#dd)
+  - [del](#del)
+  - [details](#details)
+  - [dfn](#dfn)
+  - [dialog](#dialog)
+  - [div](#div)
+  - [dl](#dl)
+  - [dt](#dt)
+  - [em](#em)
+  - [embed](#embed)
+  - [fieldset](#fieldset)
+  - [figcaption](#figcaption)
+  - [figure](#figure)
+  - [footer](#footer)
+  - [form](#form)
+  - [h1](#h1)
+  - [h2](#h2)
+  - [h3](#h3)
+  - [h4](#h4)
+  - [h5](#h5)
+  - [h6](#h6)
+  - [head](#head)
+  - [header](#header)
+  - [hgroup](#hgroup)
+  - [hr](#hr)
+  - [html](#html)
+  - [i](#i)
+  - [iframe](#iframe)
+  - [img](#img)
+  - [input](#input)
+  - [ins](#ins)
+  - [kbd](#kbd)
+  - [label](#label)
+  - [legend](#legend)
+  - [li](#li)
+  - [link](#link)
+  - [main\_](#main_)
+  - [map](#map)
+  - [mark](#mark)
+  - [menu](#menu)
+  - [meta](#meta)
+  - [meter](#meter)
+  - [nav](#nav)
+  - [noscript](#noscript)
+  - [object](#object)
+  - [ol](#ol)
+  - [optgroup](#optgroup)
+  - [option](#option)
+  - [output](#output)
+  - [p](#p)
+  - [picture](#picture)
+  - [pre](#pre)
+  - [progress](#progress)
+  - [q](#q)
+  - [rp](#rp)
+  - [rt](#rt)
+  - [ruby](#ruby)
+  - [s](#s)
+  - [samp](#samp)
+  - [section](#section)
+  - [search](#search)
+  - [select](#select)
+  - [slot](#slot)
+  - [small](#small)
+  - [source](#source)
+  - [span](#span)
+  - [strong](#strong)
+  - [style](#style)
+  - [sub](#sub)
+  - [summary](#summary)
+  - [sup](#sup)
+  - [table](#table)
+  - [tbody](#tbody)
+  - [td](#td)
+  - [template](#template)
+  - [textarea](#textarea)
+  - [tfoot](#tfoot)
+  - [th](#th)
+  - [thead](#thead)
+  - [time](#time)
+  - [title](#title)
+  - [tr](#tr)
+  - [track](#track)
+  - [u](#u)
+  - [ul](#ul)
+  - [var](#var)
+  - [video](#video)
+  - [wbr](#wbr)
+
+> **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
+
+# Documentation
+
+
+## Types
+
+@docs Html
+
+
+## Contextualization
+
+@docs contextualize, decontextualize, using
+
+
+## Text
 
 @docs text
 
 
-# Standard Elements
+## Elements
 
-#docs a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main\_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, section, search, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
+@docs a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, link, main_, map, mark, menu, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, picture, pre, progress, q, rp, rt, ruby, s, samp, section, search, select, slot, small, source, span, strong, style, sub, summary, sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr
 
 -}
 
-import Html.Internal as Internal
+import Html.Attributes exposing (Attribute)
 import VirtualDom
 
 
 
--- PRIMITIVES
+-- TYPES
 
 
 {-| Represents an HTML element encompassing a context (`ctx`) and message (`msg`), also known as a contextualized HTML element.
 -}
-type alias Html ctx msg =
-    Internal.Html ctx msg
-
-
-{-| Represents an HTML attribute encompassing a context (`ctx`) and message (`msg`), also known as a contextualized HTML attribute.
--}
-type alias Attribute ctx msg =
-    Internal.Attribute ctx msg
+type Html ctx msg
+    = Html (ctx -> VirtualDom.Node msg)
 
 
 
--- CONTEXTUAL CONVERSION
+-- CONTEXTUALIZATION
 
 
 {-| Converts a decontextualized virtual DOM node into a contextualized HTML element.
 -}
 contextualize : VirtualDom.Node msg -> Html ctx msg
-contextualize =
-    Internal.contextualizeHtml
+contextualize decontextualizedHtml =
+    Html (\_ -> decontextualizedHtml)
 
 
 {-| Converts a contextualized HTML element into a decontextualized virtual DOM node.
 -}
 decontextualize : ctx -> Html ctx msg -> VirtualDom.Node msg
-decontextualize =
-    Internal.decontextualizeHtml
-
-
-
--- CONTEXTUAL DEPENDENCY
+decontextualize context (Html apply) =
+    apply context
 
 
 {-| Establishes a dependency between a context and a contextualized HTML element.
 -}
 using : (ctx -> Html ctx msg) -> Html ctx msg
-using =
-    Internal.usingHtml
-
-
-
--- TRANSFORMATIONS
-
-
-{-| Transforms the message of a contextualized HTML element.
--}
-mapElement : (a -> b) -> Html ctx a -> Html ctx b
-mapElement =
-    Internal.mapElement
+using apply =
+    Html (\context -> decontextualize context <| apply context)
 
 
 
@@ -114,30 +215,12 @@ mapElement =
 {-| Constructs a contextualized HTML text node.
 -}
 text : String -> Html ctx msg
-text =
-    Internal.textNode
+text content =
+    Html (\_ -> VirtualDom.text content)
 
 
 
--- CUSTOM ELEMENTS
-
-
-{-| Constructs a contextualized HTML parent element.
--}
-parentElement : String -> List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-parentElement =
-    Internal.parentElement
-
-
-{-| Constructs a contextualized HTML leaf element.
--}
-leafElement : String -> List (Attribute ctx msg) -> Html ctx msg
-leafElement =
-    Internal.leafElement
-
-
-
--- STANDARD ELEMENTS
+-- ELEMENTS
 
 
 {-| Constructs a contextualized HTML `a` element.
@@ -146,8 +229,8 @@ Supported attributes: _globals_, `download`, `href`, `hreflang`, `ping`, `referr
 
 -}
 a : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-a =
-    parentElement "a"
+a attributes children =
+    element "a" attributes children
 
 
 {-| Constructs a contextualized HTML `abbr` element.
@@ -156,8 +239,8 @@ Supported attributes: _globals_
 
 -}
 abbr : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-abbr =
-    parentElement "abbr"
+abbr attributes children =
+    element "abbr" attributes children
 
 
 {-| Constructs a contextualized HTML `address` element.
@@ -166,8 +249,8 @@ Supported attributes: _globals_
 
 -}
 address : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-address =
-    parentElement "address"
+address attributes children =
+    element "address" attributes children
 
 
 {-| Constructs a contextualized HTML `area` element.
@@ -176,8 +259,8 @@ Supported attributes: _globals_, `alt`, `coords`, `download`, `href`, `ping`, `r
 
 -}
 area : List (Attribute ctx msg) -> Html ctx msg
-area =
-    leafElement "area"
+area attributes =
+    element "area" attributes []
 
 
 {-| Constructs a contextualized HTML `article` element.
@@ -186,8 +269,8 @@ Supported attributes: _globals_
 
 -}
 article : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-article =
-    parentElement "article"
+article attributes children =
+    element "article" attributes children
 
 
 {-| Constructs a contextualized HTML `aside` element.
@@ -196,8 +279,8 @@ Supported attributes: _globals_
 
 -}
 aside : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-aside =
-    parentElement "aside"
+aside attributes children =
+    element "aside" attributes children
 
 
 {-| Constructs a contextualized HTML `audio` element.
@@ -206,8 +289,8 @@ Supported attributes: _globals_, `autoplay`, `controls`, `crossorigin`, `loop`, 
 
 -}
 audio : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-audio =
-    parentElement "audio"
+audio attributes children =
+    element "audio" attributes children
 
 
 {-| Constructs a contextualized HTML `b` element.
@@ -216,8 +299,8 @@ Supported attributes: _globals_
 
 -}
 b : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-b =
-    parentElement "b"
+b attributes children =
+    element "b" attributes children
 
 
 {-| Constructs a contextualized HTML `base` element.
@@ -226,8 +309,8 @@ Supported attributes: _globals_, `href`, `target`
 
 -}
 base : List (Attribute ctx msg) -> Html ctx msg
-base =
-    leafElement "base"
+base attributes =
+    element "base" attributes []
 
 
 {-| Constructs a contextualized HTML `bdi` element.
@@ -236,8 +319,8 @@ Supported attributes: _globals_
 
 -}
 bdi : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-bdi =
-    parentElement "bdi"
+bdi attributes children =
+    element "bdi" attributes children
 
 
 {-| Constructs a contextualized HTML `bdo` element.
@@ -246,8 +329,8 @@ Supported attributes: _globals_
 
 -}
 bdo : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-bdo =
-    parentElement "bdo"
+bdo attributes children =
+    element "bdo" attributes children
 
 
 {-| Constructs a contextualized HTML `blockquote` element.
@@ -256,8 +339,8 @@ Supported attributes: _globals_, `cite`
 
 -}
 blockquote : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-blockquote =
-    parentElement "blockquote"
+blockquote attributes children =
+    element "blockquote" attributes children
 
 
 {-| Constructs a contextualized HTML `body` element.
@@ -266,8 +349,8 @@ Supported attributes: _globals_
 
 -}
 body : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-body =
-    parentElement "body"
+body attributes children =
+    element "body" attributes children
 
 
 {-| Constructs a contextualized HTML `br` element.
@@ -276,8 +359,8 @@ Supported attributes: _globals_
 
 -}
 br : List (Attribute ctx msg) -> Html ctx msg
-br =
-    leafElement "br"
+br attributes =
+    element "br" attributes []
 
 
 {-| Constructs a contextualized HTML `button` element.
@@ -286,8 +369,8 @@ Supported attributes: _globals_, `disabled`, `form`, `formaction`, `formenctype`
 
 -}
 button : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-button =
-    parentElement "button"
+button attributes children =
+    element "button" attributes children
 
 
 {-| Constructs a contextualized HTML `canvas` element.
@@ -296,8 +379,8 @@ Supported attributes: _globals_, `height`, `width`
 
 -}
 canvas : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-canvas =
-    parentElement "canvas"
+canvas attributes children =
+    element "canvas" attributes children
 
 
 {-| Constructs a contextualized HTML `caption` element.
@@ -306,8 +389,8 @@ Supported attributes: _globals_
 
 -}
 caption : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-caption =
-    parentElement "caption"
+caption attributes children =
+    element "caption" attributes children
 
 
 {-| Constructs a contextualized HTML `cite` element.
@@ -316,8 +399,8 @@ Supported attributes: _globals_
 
 -}
 cite : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-cite =
-    parentElement "cite"
+cite attributes children =
+    element "cite" attributes children
 
 
 {-| Constructs a contextualized HTML `code` element.
@@ -326,8 +409,8 @@ Supported attributes: _globals_
 
 -}
 code : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-code =
-    parentElement "code"
+code attributes children =
+    element "code" attributes children
 
 
 {-| Constructs a contextualized HTML `col` element.
@@ -336,8 +419,8 @@ Supported attributes: _globals_, `span`
 
 -}
 col : List (Attribute ctx msg) -> Html ctx msg
-col =
-    leafElement "col"
+col attributes =
+    element "col" attributes []
 
 
 {-| Constructs a contextualized HTML `colgroup` element.
@@ -346,8 +429,8 @@ Supported attributes: _globals_, `span`
 
 -}
 colgroup : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-colgroup =
-    parentElement "colgroup"
+colgroup attributes children =
+    element "colgroup" attributes children
 
 
 {-| Constructs a contextualized HTML `data` element.
@@ -356,8 +439,8 @@ Supported attributes: _globals_, `value`
 
 -}
 data : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-data =
-    parentElement "data"
+data attributes children =
+    element "data" attributes children
 
 
 {-| Constructs a contextualized HTML `datalist` element.
@@ -366,8 +449,8 @@ Supported attributes: _globals_
 
 -}
 datalist : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-datalist =
-    parentElement "datalist"
+datalist attributes children =
+    element "datalist" attributes children
 
 
 {-| Constructs a contextualized HTML `dd` element.
@@ -376,8 +459,8 @@ Supported attributes: _globals_
 
 -}
 dd : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-dd =
-    parentElement "dd"
+dd attributes children =
+    element "dd" attributes children
 
 
 {-| Constructs a contextualized HTML `del` element.
@@ -386,8 +469,8 @@ Supported attributes: _globals_, `cite`, `datetime`
 
 -}
 del : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-del =
-    parentElement "del"
+del attributes children =
+    element "del" attributes children
 
 
 {-| Constructs a contextualized HTML `details` element.
@@ -396,8 +479,8 @@ Supported attributes: _globals_, `name`, `open`
 
 -}
 details : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-details =
-    parentElement "details"
+details attributes children =
+    element "details" attributes children
 
 
 {-| Constructs a contextualized HTML `dfn` element.
@@ -406,8 +489,8 @@ Supported attributes: _globals_
 
 -}
 dfn : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-dfn =
-    parentElement "dfn"
+dfn attributes children =
+    element "dfn" attributes children
 
 
 {-| Constructs a contextualized HTML `dialog` element.
@@ -416,8 +499,8 @@ Supported attributes: _globals_, `open`
 
 -}
 dialog : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-dialog =
-    parentElement "dialog"
+dialog attributes children =
+    element "dialog" attributes children
 
 
 {-| Constructs a contextualized HTML `div` element.
@@ -426,8 +509,8 @@ Supported attributes: _globals_
 
 -}
 div : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-div =
-    parentElement "div"
+div attributes children =
+    element "div" attributes children
 
 
 {-| Constructs a contextualized HTML `dl` element.
@@ -436,8 +519,8 @@ Supported attributes: _globals_
 
 -}
 dl : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-dl =
-    parentElement "dl"
+dl attributes children =
+    element "dl" attributes children
 
 
 {-| Constructs a contextualized HTML `dt` element.
@@ -446,8 +529,8 @@ Supported attributes: _globals_
 
 -}
 dt : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-dt =
-    parentElement "dt"
+dt attributes children =
+    element "dt" attributes children
 
 
 {-| Constructs a contextualized HTML `em` element.
@@ -456,8 +539,8 @@ Supported attributes: _globals_
 
 -}
 em : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-em =
-    parentElement "em"
+em attributes children =
+    element "em" attributes children
 
 
 {-| Constructs a contextualized HTML `embed` element.
@@ -466,8 +549,8 @@ Supported attributes: _globals_, `height`, `src`, `type`, `width`
 
 -}
 embed : List (Attribute ctx msg) -> Html ctx msg
-embed =
-    leafElement "embed"
+embed attributes =
+    element "embed" attributes []
 
 
 {-| Constructs a contextualized HTML `fieldset` element.
@@ -476,8 +559,8 @@ Supported attributes: _globals_, `disabled`, `form`, `name`
 
 -}
 fieldset : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-fieldset =
-    parentElement "fieldset"
+fieldset attributes children =
+    element "fieldset" attributes children
 
 
 {-| Constructs a contextualized HTML `figcaption` element.
@@ -486,8 +569,8 @@ Supported attributes: _globals_
 
 -}
 figcaption : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-figcaption =
-    parentElement "figcaption"
+figcaption attributes children =
+    element "figcaption" attributes children
 
 
 {-| Constructs a contextualized HTML `figure` element.
@@ -496,8 +579,8 @@ Supported attributes: _globals_
 
 -}
 figure : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-figure =
-    parentElement "figure"
+figure attributes children =
+    element "figure" attributes children
 
 
 {-| Constructs a contextualized HTML `footer` element.
@@ -506,8 +589,8 @@ Supported attributes: _globals_
 
 -}
 footer : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-footer =
-    parentElement "footer"
+footer attributes children =
+    element "footer" attributes children
 
 
 {-| Constructs a contextualized HTML `form` element.
@@ -516,8 +599,8 @@ Supported attributes: _globals_, `accept-charset`, `action`, `autocomplete`, `en
 
 -}
 form : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-form =
-    parentElement "form"
+form attributes children =
+    element "form" attributes children
 
 
 {-| Constructs a contextualized HTML `h1` element.
@@ -526,8 +609,8 @@ Supported attributes: _globals_
 
 -}
 h1 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h1 =
-    parentElement "h1"
+h1 attributes children =
+    element "h1" attributes children
 
 
 {-| Constructs a contextualized HTML `h2` element.
@@ -536,8 +619,8 @@ Supported attributes: _globals_
 
 -}
 h2 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h2 =
-    parentElement "h2"
+h2 attributes children =
+    element "h2" attributes children
 
 
 {-| Constructs a contextualized HTML `h3` element.
@@ -546,8 +629,8 @@ Supported attributes: _globals_
 
 -}
 h3 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h3 =
-    parentElement "h3"
+h3 attributes children =
+    element "h3" attributes children
 
 
 {-| Constructs a contextualized HTML `h4` element.
@@ -556,8 +639,8 @@ Supported attributes: _globals_
 
 -}
 h4 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h4 =
-    parentElement "h4"
+h4 attributes children =
+    element "h4" attributes children
 
 
 {-| Constructs a contextualized HTML `h5` element.
@@ -566,8 +649,8 @@ Supported attributes: _globals_
 
 -}
 h5 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h5 =
-    parentElement "h5"
+h5 attributes children =
+    element "h5" attributes children
 
 
 {-| Constructs a contextualized HTML `h6` element.
@@ -576,8 +659,8 @@ Supported attributes: _globals_
 
 -}
 h6 : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-h6 =
-    parentElement "h6"
+h6 attributes children =
+    element "h6" attributes children
 
 
 {-| Constructs a contextualized HTML `head` element.
@@ -586,8 +669,8 @@ Supported attributes: _globals_
 
 -}
 head : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-head =
-    parentElement "head"
+head attributes children =
+    element "head" attributes children
 
 
 {-| Constructs a contextualized HTML `header` element.
@@ -596,8 +679,8 @@ Supported attributes: _globals_
 
 -}
 header : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-header =
-    parentElement "header"
+header attributes children =
+    element "header" attributes children
 
 
 {-| Constructs a contextualized HTML `hgroup` element.
@@ -606,8 +689,8 @@ Supported attributes: _globals_
 
 -}
 hgroup : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-hgroup =
-    parentElement "hgroup"
+hgroup attributes children =
+    element "hgroup" attributes children
 
 
 {-| Constructs a contextualized HTML `hr` element.
@@ -616,8 +699,8 @@ Supported attributes: _globals_
 
 -}
 hr : List (Attribute ctx msg) -> Html ctx msg
-hr =
-    leafElement "hr"
+hr attributes =
+    element "hr" attributes []
 
 
 {-| Constructs a contextualized HTML `html` element.
@@ -626,8 +709,8 @@ Supported attributes: _globals_
 
 -}
 html : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-html =
-    parentElement "html"
+html attributes children =
+    element "html" attributes children
 
 
 {-| Constructs a contextualized HTML `i` element.
@@ -636,8 +719,8 @@ Supported attributes: _globals_
 
 -}
 i : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-i =
-    parentElement "i"
+i attributes children =
+    element "i" attributes children
 
 
 {-| Constructs a contextualized HTML `iframe` element.
@@ -646,8 +729,8 @@ Supported attributes: _globals_, `allow`, `allowfullscreen`, `height`, `loading`
 
 -}
 iframe : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-iframe =
-    parentElement "iframe"
+iframe attributes children =
+    element "iframe" attributes children
 
 
 {-| Constructs a contextualized HTML `img` element.
@@ -656,8 +739,8 @@ Supported attributes: _globals_, `alt`, `crossorigin`, `decoding`, `fetchpriorit
 
 -}
 img : List (Attribute ctx msg) -> Html ctx msg
-img =
-    leafElement "img"
+img attributes =
+    element "img" attributes []
 
 
 {-| Constructs a contextualized HTML `input` element.
@@ -666,8 +749,8 @@ Supported attributes: _globals_, `accept`, `alt`, `autocomplete`, `checked`, `di
 
 -}
 input : List (Attribute ctx msg) -> Html ctx msg
-input =
-    leafElement "input"
+input attributes =
+    element "input" attributes []
 
 
 {-| Constructs a contextualized HTML `ins` element.
@@ -676,8 +759,8 @@ Supported attributes: _globals_, `cite`, `datetime`
 
 -}
 ins : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-ins =
-    parentElement "ins"
+ins attributes children =
+    element "ins" attributes children
 
 
 {-| Constructs a contextualized HTML `kbd` element.
@@ -686,8 +769,8 @@ Supported attributes: _globals_
 
 -}
 kbd : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-kbd =
-    parentElement "kbd"
+kbd attributes children =
+    element "kbd" attributes children
 
 
 {-| Constructs a contextualized HTML `label` element.
@@ -696,8 +779,8 @@ Supported attributes: _globals_, `for`
 
 -}
 label : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-label =
-    parentElement "label"
+label attributes children =
+    element "label" attributes children
 
 
 {-| Constructs a contextualized HTML `legend` element.
@@ -706,8 +789,8 @@ Supported attributes: _globals_
 
 -}
 legend : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-legend =
-    parentElement "legend"
+legend attributes children =
+    element "legend" attributes children
 
 
 {-| Constructs a contextualized HTML `li` element.
@@ -716,8 +799,8 @@ Supported attributes: _globals_, `value`
 
 -}
 li : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-li =
-    parentElement "li"
+li attributes children =
+    element "li" attributes children
 
 
 {-| Constructs a contextualized HTML `link` element.
@@ -726,8 +809,8 @@ Supported attributes: _globals_, `as`, `blocking`, `color`, `crossorigin`, `disa
 
 -}
 link : List (Attribute ctx msg) -> Html ctx msg
-link =
-    leafElement "link"
+link attributes =
+    element "link" attributes []
 
 
 {-| Constructs a contextualized HTML `main` element.
@@ -736,8 +819,8 @@ Supported attributes: _globals_
 
 -}
 main_ : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-main_ =
-    parentElement "main"
+main_ attributes children =
+    element "main" attributes children
 
 
 {-| Constructs a contextualized HTML `map` element.
@@ -746,8 +829,8 @@ Supported attributes: _globals_, `name`
 
 -}
 map : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-map =
-    parentElement "map"
+map attributes children =
+    element "map" attributes children
 
 
 {-| Constructs a contextualized HTML `mark` element.
@@ -756,8 +839,8 @@ Supported attributes: _globals_
 
 -}
 mark : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-mark =
-    parentElement "mark"
+mark attributes children =
+    element "mark" attributes children
 
 
 {-| Constructs a contextualized HTML `menu` element.
@@ -766,8 +849,8 @@ Supported attributes: _globals_
 
 -}
 menu : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-menu =
-    parentElement "menu"
+menu attributes children =
+    element "menu" attributes children
 
 
 {-| Constructs a contextualized HTML `meta` element.
@@ -776,8 +859,8 @@ Supported attributes: _globals_, `charset`, `content`, `http-equiv`, `media`, `n
 
 -}
 meta : List (Attribute ctx msg) -> Html ctx msg
-meta =
-    leafElement "meta"
+meta attributes =
+    element "meta" attributes []
 
 
 {-| Constructs a contextualized HTML `meter` element.
@@ -786,8 +869,8 @@ Supported attributes: _globals_, `high`, `low`, `max`, `min`, `optimum`, `value`
 
 -}
 meter : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-meter =
-    parentElement "meter"
+meter attributes children =
+    element "meter" attributes children
 
 
 {-| Constructs a contextualized HTML `nav` element.
@@ -796,8 +879,8 @@ Supported attributes: _globals_
 
 -}
 nav : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-nav =
-    parentElement "nav"
+nav attributes children =
+    element "nav" attributes children
 
 
 {-| Constructs a contextualized HTML `noscript` element.
@@ -806,8 +889,8 @@ Supported attributes: _globals_
 
 -}
 noscript : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-noscript =
-    parentElement "noscript"
+noscript attributes children =
+    element "noscript" attributes children
 
 
 {-| Constructs a contextualized HTML `object` element.
@@ -816,8 +899,8 @@ Supported attributes: _globals_, `data`, `form`, `height`, `name`, `type`, `widt
 
 -}
 object : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-object =
-    parentElement "object"
+object attributes children =
+    element "object" attributes children
 
 
 {-| Constructs a contextualized HTML `ol` element.
@@ -826,8 +909,8 @@ Supported attributes: _globals_, `reversed`, `start`, `type`
 
 -}
 ol : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-ol =
-    parentElement "ol"
+ol attributes children =
+    element "ol" attributes children
 
 
 {-| Constructs a contextualized HTML `optgroup` element.
@@ -836,8 +919,8 @@ Supported attributes: _globals_, `disabled`, `label`
 
 -}
 optgroup : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-optgroup =
-    parentElement "optgroup"
+optgroup attributes children =
+    element "optgroup" attributes children
 
 
 {-| Constructs a contextualized HTML `option` element.
@@ -846,8 +929,8 @@ Supported attributes: _globals_, `disabled`, `label`, `selected`, `value`
 
 -}
 option : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-option =
-    parentElement "option"
+option attributes children =
+    element "option" attributes children
 
 
 {-| Constructs a contextualized HTML `output` element.
@@ -856,8 +939,8 @@ Supported attributes: _globals_, `for`, `form`, `name`
 
 -}
 output : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-output =
-    parentElement "output"
+output attributes children =
+    element "output" attributes children
 
 
 {-| Constructs a contextualized HTML `p` element.
@@ -866,8 +949,8 @@ Supported attributes: _globals_
 
 -}
 p : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-p =
-    parentElement "p"
+p attributes children =
+    element "p" attributes children
 
 
 {-| Constructs a contextualized HTML `picture` element.
@@ -876,8 +959,8 @@ Supported attributes: _globals_
 
 -}
 picture : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-picture =
-    parentElement "picture"
+picture attributes children =
+    element "picture" attributes children
 
 
 {-| Constructs a contextualized HTML `pre` element.
@@ -886,8 +969,8 @@ Supported attributes: _globals_
 
 -}
 pre : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-pre =
-    parentElement "pre"
+pre attributes children =
+    element "pre" attributes children
 
 
 {-| Constructs a contextualized HTML `progress` element.
@@ -896,8 +979,8 @@ Supported attributes: _globals_, `max`, `value`
 
 -}
 progress : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-progress =
-    parentElement "progress"
+progress attributes children =
+    element "progress" attributes children
 
 
 {-| Constructs a contextualized HTML `q` element.
@@ -906,8 +989,8 @@ Supported attributes: _globals_, `cite`
 
 -}
 q : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-q =
-    parentElement "q"
+q attributes children =
+    element "q" attributes children
 
 
 {-| Constructs a contextualized HTML `rp` element.
@@ -916,8 +999,8 @@ Supported attributes: _globals_
 
 -}
 rp : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-rp =
-    parentElement "rp"
+rp attributes children =
+    element "rp" attributes children
 
 
 {-| Constructs a contextualized HTML `rt` element.
@@ -926,8 +1009,8 @@ Supported attributes: _globals_
 
 -}
 rt : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-rt =
-    parentElement "rt"
+rt attributes children =
+    element "rt" attributes children
 
 
 {-| Constructs a contextualized HTML `ruby` element.
@@ -936,8 +1019,8 @@ Supported attributes: _globals_
 
 -}
 ruby : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-ruby =
-    parentElement "ruby"
+ruby attributes children =
+    element "ruby" attributes children
 
 
 {-| Constructs a contextualized HTML `s` element.
@@ -946,8 +1029,8 @@ Supported attributes: _globals_
 
 -}
 s : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-s =
-    parentElement "s"
+s attributes children =
+    element "s" attributes children
 
 
 {-| Constructs a contextualized HTML `samp` element.
@@ -956,8 +1039,8 @@ Supported attributes: _globals_
 
 -}
 samp : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-samp =
-    parentElement "samp"
+samp attributes children =
+    element "samp" attributes children
 
 
 {-| Constructs a contextualized HTML `search` element.
@@ -966,8 +1049,8 @@ Supported attributes: _globals_
 
 -}
 search : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-search =
-    parentElement "search"
+search attributes children =
+    element "search" attributes children
 
 
 {-| Constructs a contextualized HTML `section` element.
@@ -976,8 +1059,8 @@ Supported attributes: _globals_
 
 -}
 section : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-section =
-    parentElement "section"
+section attributes children =
+    element "section" attributes children
 
 
 {-| Constructs a contextualized HTML `select` element.
@@ -986,8 +1069,8 @@ Supported attributes: _globals_, `autocomplete`, `disabled`, `form`, `multiple`,
 
 -}
 select : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-select =
-    parentElement "select"
+select attributes children =
+    element "select" attributes children
 
 
 {-| Constructs a contextualized HTML `slot` element.
@@ -996,8 +1079,8 @@ Supported attributes: _globals_, `name`
 
 -}
 slot : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-slot =
-    parentElement "slot"
+slot attributes children =
+    element "slot" attributes children
 
 
 {-| Constructs a contextualized HTML `small` element.
@@ -1006,8 +1089,8 @@ Supported attributes: _globals_
 
 -}
 small : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-small =
-    parentElement "small"
+small attributes children =
+    element "small" attributes children
 
 
 {-| Constructs a contextualized HTML `source` element.
@@ -1016,8 +1099,8 @@ Supported attributes: _globals_, `height`, `media`, `sizes`, `src`, `srcset`, `t
 
 -}
 source : List (Attribute ctx msg) -> Html ctx msg
-source =
-    leafElement "source"
+source attributes =
+    element "source" attributes []
 
 
 {-| Constructs a contextualized HTML `span` element.
@@ -1026,8 +1109,8 @@ Supported attributes: _globals_
 
 -}
 span : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-span =
-    parentElement "span"
+span attributes children =
+    element "span" attributes children
 
 
 {-| Constructs a contextualized HTML `strong` element.
@@ -1036,8 +1119,8 @@ Supported attributes: _globals_
 
 -}
 strong : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-strong =
-    parentElement "strong"
+strong attributes children =
+    element "strong" attributes children
 
 
 {-| Constructs a contextualized HTML `style` element.
@@ -1046,8 +1129,8 @@ Supported attributes: _globals_, `blocking`, `media`
 
 -}
 style : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-style =
-    parentElement "style"
+style attributes children =
+    element "style" attributes children
 
 
 {-| Constructs a contextualized HTML `sub` element.
@@ -1056,8 +1139,8 @@ Supported attributes: _globals_
 
 -}
 sub : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-sub =
-    parentElement "sub"
+sub attributes children =
+    element "sub" attributes children
 
 
 {-| Constructs a contextualized HTML `summary` element.
@@ -1066,8 +1149,8 @@ Supported attributes: _globals_
 
 -}
 summary : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-summary =
-    parentElement "summary"
+summary attributes children =
+    element "summary" attributes children
 
 
 {-| Constructs a contextualized HTML `sup` element.
@@ -1076,8 +1159,8 @@ Supported attributes: _globals_
 
 -}
 sup : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-sup =
-    parentElement "sup"
+sup attributes children =
+    element "sup" attributes children
 
 
 {-| Constructs a contextualized HTML `table` element.
@@ -1086,8 +1169,8 @@ Supported attributes: _globals_
 
 -}
 table : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-table =
-    parentElement "table"
+table attributes children =
+    element "table" attributes children
 
 
 {-| Constructs a contextualized HTML `tbody` element.
@@ -1096,8 +1179,8 @@ Supported attributes: _globals_
 
 -}
 tbody : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-tbody =
-    parentElement "tbody"
+tbody attributes children =
+    element "tbody" attributes children
 
 
 {-| Constructs a contextualized HTML `td` element.
@@ -1106,8 +1189,8 @@ Supported attributes: _globals_, `colspan`, `headers`, `rowspan`
 
 -}
 td : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-td =
-    parentElement "td"
+td attributes children =
+    element "td" attributes children
 
 
 {-| Constructs a contextualized HTML `template` element.
@@ -1116,8 +1199,8 @@ Supported attributes: _globals_, `shadowrootclonable`, `shadowrootdelegatesfocus
 
 -}
 template : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-template =
-    parentElement "template"
+template attributes children =
+    element "template" attributes children
 
 
 {-| Constructs a contextualized HTML `textarea` element.
@@ -1126,8 +1209,8 @@ Supported attributes: _globals_, `audocomplete`, `cols`, `dirname`, `disabled`, 
 
 -}
 textarea : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-textarea =
-    parentElement "textarea"
+textarea attributes children =
+    element "textarea" attributes children
 
 
 {-| Constructs a contextualized HTML `tfoot` element.
@@ -1136,8 +1219,8 @@ Supported attributes: _globals_
 
 -}
 tfoot : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-tfoot =
-    parentElement "tfoot"
+tfoot attributes children =
+    element "tfoot" attributes children
 
 
 {-| Constructs a contextualized HTML `th` element.
@@ -1146,8 +1229,8 @@ Supported attributes: _globals_, `abbr`, `colspan`, `headers`, `rowspan`, `scope
 
 -}
 th : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-th =
-    parentElement "th"
+th attributes children =
+    element "th" attributes children
 
 
 {-| Constructs a contextualized HTML `thead` element.
@@ -1156,8 +1239,8 @@ Supported attributes: _globals_
 
 -}
 thead : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-thead =
-    parentElement "thead"
+thead attributes children =
+    element "thead" attributes children
 
 
 {-| Constructs a contextualized HTML `time` element.
@@ -1166,8 +1249,8 @@ Supported attributes: _globals_, `datetime`
 
 -}
 time : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-time =
-    parentElement "time"
+time attributes children =
+    element "time" attributes children
 
 
 {-| Constructs a contextualized HTML `title` element.
@@ -1176,8 +1259,8 @@ Supported attributes: _globals_
 
 -}
 title : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-title =
-    parentElement "title"
+title attributes children =
+    element "title" attributes children
 
 
 {-| Constructs a contextualized HTML `tr` element.
@@ -1186,8 +1269,8 @@ Supported attributes: _globals_
 
 -}
 tr : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-tr =
-    parentElement "tr"
+tr attributes children =
+    element "tr" attributes children
 
 
 {-| Constructs a contextualized HTML `track` element.
@@ -1196,8 +1279,8 @@ Supported attributes: _globals_, `default`, `kind`, `label`, `src`, `srclang`
 
 -}
 track : List (Attribute ctx msg) -> Html ctx msg
-track =
-    leafElement "track"
+track attributes =
+    element "track" attributes []
 
 
 {-| Constructs a contextualized HTML `u` element.
@@ -1206,8 +1289,8 @@ Supported attributes: _globals_
 
 -}
 u : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-u =
-    parentElement "u"
+u attributes children =
+    element "u" attributes children
 
 
 {-| Constructs a contextualized HTML `ul` element.
@@ -1216,8 +1299,8 @@ Supported attributes: _globals_
 
 -}
 ul : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-ul =
-    parentElement "ul"
+ul attributes children =
+    element "ul" attributes children
 
 
 {-| Constructs a contextualized HTML `var` element.
@@ -1226,8 +1309,8 @@ Supported attributes: _globals_
 
 -}
 var : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-var =
-    parentElement "var"
+var attributes children =
+    element "var" attributes children
 
 
 {-| Constructs a contextualized HTML `video` element.
@@ -1236,8 +1319,8 @@ Supported attributes: _globals_, `autoplay`, `controls`, `crossorigin`, `height`
 
 -}
 video : List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
-video =
-    parentElement "video"
+video attributes children =
+    element "video" attributes children
 
 
 {-| Constructs a contextualized HTML `wbr` element.
@@ -1246,5 +1329,22 @@ Supported attributes: _globals_
 
 -}
 wbr : List (Attribute ctx msg) -> Html ctx msg
-wbr =
-    leafElement "wbr"
+wbr attributes =
+    element "wbr" attributes []
+
+
+
+-- PRIVATE
+
+
+{-| Constructs a contextualized HTML element.
+-}
+element : String -> List (Attribute ctx msg) -> List (Html ctx msg) -> Html ctx msg
+element name attributes children =
+    Html
+        (\context ->
+            VirtualDom.node
+                name
+                (List.map (Html.Attributes.decontextualize context) attributes)
+                (List.map (decontextualize context) children)
+        )
