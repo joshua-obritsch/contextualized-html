@@ -6,20 +6,167 @@ module Html.Attributes exposing
 
 {-| This module provides a set of types and functions for generating context-dependent HTML attributes.
 
-Removed: `async`, `nomodule`
+
+# Table of Contents
+
+  - Types
+      - [Attribute](#Attribute)
+
+  - Contextualization
+      - [contextualize](#contextualize)
+      - [decontextualize](#decontextualize)
+      - [using](#using)
+
+  - Attributes
+      - [abbr](#abbr)
+      - [accept](#accept)
+      - [acceptCharset](#acceptCharset)
+      - [accesskey](#accesskey)
+      - [action](#action)
+      - [allow](#allow)
+      - [allowfullscreen](#allowfullscreen)
+      - [alt](#alt)
+      - [as\_](#as_)
+      - [autocapitalize](#autocapitalize)
+      - [autocomplete](#autocomplete)
+      - [autofocus](#autofocus)
+      - [autoplay](#autoplay)
+      - [blocking](#blocking)
+      - [charset](#charset)
+      - [checked](#checked)
+      - [cite](#cite)
+      - [class](#class)
+      - [color](#color)
+      - [cols](#cols)
+      - [colspan](#colspan)
+      - [content](#content)
+      - [contenteditable](#contenteditable)
+      - [controls](#controls)
+      - [coords](#coords)
+      - [crossorigin](#crossorigin)
+      - [data](#data)
+      - [datetime](#datetime)
+      - [decoding](#decoding)
+      - [default](#default)
+      - [dir](#dir)
+      - [dirname](#dirname)
+      - [disabled](#disabled)
+      - [download](#download)
+      - [draggable](#draggable)
+      - [enctype](#enctype)
+      - [enterkeyhint](#enterkeyhint)
+      - [fetchpriority](#fetchpriority)
+      - [for](#for)
+      - [form](#form)
+      - [formaction](#formaction)
+      - [formenctype](#formenctype)
+      - [formmethod](#formmethod)
+      - [formnovalidate](#formnovalidate)
+      - [formtarget](#formtarget)
+      - [headers](#headers)
+      - [height](#height)
+      - [hidden](#hidden)
+      - [high](#high)
+      - [href](#href)
+      - [hreflang](#hreflang)
+      - [httpEquiv](#httpEquiv)
+      - [id](#id)
+      - [imagesizes](#imagesizes)
+      - [imagesrcset](#imagesrcset)
+      - [inert](#inert)
+      - [inputmode](#inputmode)
+      - [integrity](#integrity)
+      - [is](#is)
+      - [ismap](#ismap)
+      - [itemid](#itemid)
+      - [itemprop](#itemprop)
+      - [itemref](#itemref)
+      - [itemscope](#itemscope)
+      - [itemtype](#itemtype)
+      - [kind](#kind)
+      - [label](#label)
+      - [lang](#lang)
+      - [list](#list)
+      - [loading](#loading)
+      - [loop](#loop)
+      - [low](#low)
+      - [max](#max)
+      - [maxlength](#maxlength)
+      - [media](#media)
+      - [method](#method)
+      - [min](#min)
+      - [minlength](#minlength)
+      - [multiple](#multiple)
+      - [muted](#muted)
+      - [name](#name)
+      - [nonce](#nonce)
+      - [novalidate](#novalidate)
+      - [open](#open)
+      - [optimum](#optimum)
+      - [pattern](#pattern)
+      - [ping](#ping)
+      - [placeholder](#placeholder)
+      - [playsinline](#playsinline)
+      - [popover](#popover)
+      - [popovertarget](#popovertarget)
+      - [popovertargetaction](#popovertargetaction)
+      - [poster](#poster)
+      - [preload](#preload)
+      - [readonly](#readonly)
+      - [referrerpolicy](#referrerpolicy)
+      - [rel](#rel)
+      - [required](#required)
+      - [reversed](#reversed)
+      - [rows](#rows)
+      - [rowspan](#rowspan)
+      - [sandbox](#sandbox)
+      - [scope](#scope)
+      - [selected](#selected)
+      - [shadowrootclonable](#shadowrootclonable)
+      - [shadowrootdelegatesfocus](#shadowrootdelegatesfocus)
+      - [shadowrootmode](#shadowrootmode)
+      - [shadowrootserializable](#shadowrootserializable)
+      - [shape](#shape)
+      - [size](#size)
+      - [sizes](#sizes)
+      - [slot](#slot)
+      - [span](#span)
+      - [spellcheck](#spellcheck)
+      - [src](#src)
+      - [srcdoc](#srcdoc)
+      - [srclang](#srclang)
+      - [srcset](#srcset)
+      - [start](#start)
+      - [step](#step)
+      - [style](#style)
+      - [tabindex](#tabindex)
+      - [target](#target)
+      - [title](#title)
+      - [translate](#translate)
+      - [type\_](#type_)
+      - [usemap](#usemap)
+      - [value](#value)
+      - [width](#width)
+      - [wrap](#wrap)
+      - [writingsuggestions](#writingsuggestions)
+
+> **_NOTE:_** The `async` and `nomodule` attributes are omitted in this package as they are only supported by the `script` element which has also been omitted due to incompatibility with Elm.
 
 
-# Types
+# Documentation
+
+
+## Types
 
 @docs Attribute
 
 
-# Contextualization
+## Contextualization
 
 @docs contextualize, decontextualize, using
 
 
-# Attributes
+## Attributes
 
 @docs abbr, accept, acceptCharset, accesskey, action, allow, allowfullscreen, alt, as_, autocapitalize, autocomplete, autofocus, autoplay, blocking, charset, checked, cite, class, color, cols, colspan, content, contenteditable, controls, coords, crossorigin, data, datetime, decoding, default, dir, dirname, disabled, download, draggable, enctype, enterkeyhint, fetchpriority, for, form, formaction, formenctype, formmethod, formnovalidate, formtarget, headers, height, hidden, high, href, hreflang, httpEquiv, id, imagesizes, imagesrcset, inert, inputmode, integrity, is, ismap, itemid, itemprop, itemref, itemscope, itemtype, kind, label, lang, list, loading, loop, low, max, maxlength, media, method, min, minlength, multiple, muted, name, nonce, novalidate, open, optimum, pattern, ping, placeholder, playsinline, popover, popovertarget, popovertargetaction, poster, preload, readonly, referrerpolicy, rel, required, reversed, rows, rowspan, sandbox, scope, selected, shadowrootclonable, shadowrootdelegatesfocus, shadowrootmode, shadowrootserializable, shape, size, sizes, slot, span, spellcheck, src, srcdoc, srclang, srcset, start, step, style, tabindex, target, title, translate, type_, usemap, value, width, wrap, writingsuggestions
 
@@ -151,6 +298,8 @@ alt val =
 {-| Constructs a contextualized HTML `as` attribute.
 
 Supported elements: `link`
+
+> **_NOTE:_** The `as` attribute conflicts with an Elm keyword and is therefore suffixed with an underscore.
 
 -}
 as_ : String -> Attribute ctx msg
@@ -1335,6 +1484,8 @@ translate val =
 Supported elements: `a`, `button`, `embed`, `input`, `link`, `object`, `ol`, `script`, `source`
 
 > **_NOTE:_** The HTML `script` element is omitted in this package due to incompatibility with Elm.
+
+> **_NOTE:_** The `type` attribute conflicts with an Elm keyword and is therefore suffixed with an underscore.
 
 -}
 type_ : String -> Attribute ctx msg
